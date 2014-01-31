@@ -165,6 +165,7 @@
 
         var percentPattern = /%p\.{0,1}(\d{0,})/;
         var seriesPattern = /%s/;
+		var labelPattern = /%l/;
         var xPattern = /%x\.{0,1}(\d{0,})/;
         var yPattern = /%y\.{0,1}(\d{0,})/;
         var xPatternWithoutPrecision = "%x";
@@ -180,6 +181,7 @@
             x = item.series.data[item.dataIndex][0];
             y = item.series.data[item.dataIndex][1];
         }
+		var l =item.series.data[item.dataIndex][2] ; //the label item
 
         // I think this is only in case of threshold plugin
         if (item.series.label === null && item.series.originSeries) {
@@ -203,6 +205,15 @@
         else {
             //remove %s if label is undefined
             content = content.replace(seriesPattern, "");
+        }
+// label match
+        if( typeof(l) !== 'undefined' ) {
+            content = content.replace(labelPattern, l);
+			
+        }
+        else {
+            //remove %s if label is undefined
+            content = content.replace(labelPattern, "");
         }
 
         // time mode axes with custom dateFormat
